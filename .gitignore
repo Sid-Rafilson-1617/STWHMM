@@ -1,0 +1,7 @@
+__pycache__
+fit_results*
+*.docx
+*.pptx
+.venv
+*.npz
+*.npy

@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb} % or \usepackage{amsfonts}
+\usepackage{amsmath}
+
+\title{Time-Warping Sequence Hidden Markov Model}
+\author{Sid Rafilson}
+\date{August 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{Method}
+
+Suppose we observe spike counts $Y$ across a population of $N$ neurons for $T$ time steps, such that
+
+\begin{equation}
+Y = \left(\vec{y}_1, \vec{y}_2, \ldots, \vec{y}_T\right),
+\end{equation}
+where each observation $\vec{y}_t$ is a vector of spike counts across the $N$ neurons,
+
+\begin{equation}
+\vec{y}_t =
+\begin{bmatrix}
+y_t^1 \\
+y_t^2 \\
+\vdots \\
+y_t^N
+\end{bmatrix}
+\in \mathbb{N}^N.
+\end{equation}
+
+
+
+We assume that the dynamics of a set of $M$ latent states
+\begin{equation}
+Q = q_{1}, q_{2},...,q_{M}
+\end{equation}
+generate the spike counts which are drawn from a Poisson distribution. That is, given the latent state sequence
+
+\begin{equation}
+Z = z_{1}, z_{2}, ..., z_{T}
+\end{equation}
+we have that 
+
+\begin{equation}
+B_{n,i} = p(y_{t}^{n} | z_{t} = q_{i}) = \frac{(\lambda_{n,q_{i}})^{y_{t}^{n}} e^{\lambda_{n,q_{i}}}} {y_{t}^{n}!}
+\end{equation}
+which we call the emissions matrix $B \in \mathbb{R}^{N \times M}$. The dynamics of the latent states are determined probabilisitically, but are assumed to be constrained to ordered sequences such that
+\begin{equation}
+p(z_{t+1} = q_{i+k} | z_t = q_i) = 0
+\end{equation}
+except when $k=1$, $i=0$ or when $i+k=1$. This gives us a matrix $T$ with the following form 
+
+
+\begin{equation}
+T =
+\begin{bmatrix}
+0     & a_{12} & a_{13} & a_{14} & \cdots & a_{1M} \\
+a_{21} & 0     & a_{23} & 0      & \cdots & 0 \\
+a_{31} & 0     & 0      & a_{34} & \ddots & \vdots \\
+a_{41} & 0     & 0      & 0      & \ddots & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & a_{M-1,M} \\
+a_{M1} & 0     & 0      & 0      & \cdots & 0
+\end{bmatrix}
+\in \mathbb{R}^{M \times M}.
+\end{equation}
+Thus, the only allowed transitions are $q_1 \rightarrow q_j$, $q_i \rightarrow q_1$, and $q_i \rightarrow q_{i+1}$.
+
+\end{document}

@@ -5,3 +5,6 @@ fit_results*
 .venv
 *.npz
 *.npy
+data
+logs
+hmm_tasks*
